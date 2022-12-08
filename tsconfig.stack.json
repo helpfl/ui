@@ -1,0 +1,18 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "module": "commonjs",
+        "declaration": true,
+        "strict": true,
+        "outDir": "dist",
+        "typeRoots": [
+          "./node_modules/@types"
+        ],
+        "sourceMap": true
+    },
+    "include": [
+        "./infrastructure/**/*.ts"
+    ]
+  }
+  
