@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {marked} from 'marked';
-import { map, Observable, of, tap } from 'rxjs';
+import { catchError, EMPTY, map, Observable, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -30,12 +30,12 @@ export class AppComponent {
     const now = Date.now();
     const aMonthAgo = now - 1000 * 60 * 60 * 24 * 30;
     const requestOptions = {
-      headers: {
+      params: {
         start: now.toString(),
         end: aMonthAgo.toString()
       }
     };
-    return this.httpClient.get<string[]>('https://api.helpfl.click/blog', requestOptions)
+    return this.httpClient.get<string[]>('https://api.helpfl.click/blog', requestOptions);
   };
 
   private readonly cacheContent = (content: string[]) => {
@@ -52,7 +52,7 @@ export class AppComponent {
   }
 
   private readonly cachedContent = (): string[] | void => {
-    const cachedItem = localStorage.getItem('content');
+    const cachedItem = localStorage.getItem('content1');
     if (!cachedItem) {
       return;
     }
