@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import {marked} from 'marked';
-import { catchError, EMPTY, map, mergeMap, Observable, of, shareReplay, tap } from 'rxjs';
+import { marked } from 'marked';
+import {  map, Observable, pluck, shareReplay } from 'rxjs';
+import * as Zod from 'zod';
 
 @Component({
   selector: 'app-root',
@@ -12,27 +13,47 @@ export class AppComponent {
 
   constructor(private readonly httpClient: HttpClient) {
   }
-
-  private readonly getBlogManifest = (): Observable<Manifest> => {
-    return this.httpClient.get<Manifest>('/assets/manifest.json');
+  private readonly getLatestBlogPost = () => {
+    const url = 'https://api.helpfl.click/blog'
+    const end = Date.now();
+    const start = end - 1000 * 60 * 60 * 24 * 30
+    return this.httpClient.get<BlogPost[]>(url, {
+      params: {
+        start: start.toString(),
+        end: end.toString(),
+      }
+    });
   };
 
-  private readonly getLatestBlogPost = () => {
-    return this.getBlogManifest().pipe(
-      map(({files: [first]}) => first),
-      mergeMap((file) => this.httpClient.get(file, {responseType: 'text'})),
+  private render = (observable: Observable<string>): Observable<string> => {
+    return observable.pipe(
+      map((markdown) => marked(markdown)),
     );
   };
 
-  private render(content: string): string {
-    return marked.parse(content);
-  }
-
   public readonly latestBlogPost$ = this.getLatestBlogPost().pipe(
+    pick(0),
+    pick('content'),
+    this.render,
     shareReplay(1),
-    map(this.render),
   );
-
 }
 
-type Manifest = {files: string[]};
+
+export type BlogPost = Zod.infer<typeof blogPostValidation>;
+
+const blogPostValidation = Zod.object({
+    date: Zod.number(),
+    content: Zod.string(),
+    id: Zod.string(),
+    name: Zod.string()
+});
+
+
+
+const pick = <T, K extends keyof T>(key: K) => (observable: Observable<T>): Observable<T[K]> => {
+  return observable.pipe(
+    map(({[key]: value}) => value),
+  );
+};
+
