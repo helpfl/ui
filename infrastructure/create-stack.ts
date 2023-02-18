@@ -6,7 +6,7 @@ import { TestAppStack } from './app-stack';
 const app = new cdk.App();
 new TestAppStack(app, 'TestAppStack', {
   env: {
-    region: 'us-west-2',
-    account: '084882962555'
+    region: process.env['AWS_REGION'],
+    account: process.env['AWS_ACCOUNT']
   }
 });

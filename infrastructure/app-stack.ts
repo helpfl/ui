@@ -21,7 +21,7 @@ export class TestAppStack extends cdk.Stack {
         websiteErrorDocument: 'index.html'
     });
 
-    const deployment = new BucketDeployment(this, "HelpflSPADeployment", {
+    new BucketDeployment(this, "HelpflSPADeployment", {
         sources: [
             Source.asset('./dist/ui')
         ],
@@ -56,6 +56,6 @@ export class TestAppStack extends cdk.Stack {
         ttl: Duration.minutes(1),
     });
 
-    
+
   }
 }
