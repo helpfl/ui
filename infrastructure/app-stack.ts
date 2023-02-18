@@ -8,9 +8,8 @@ import { CloudFrontTarget } from 'aws-cdk-lib/aws-route53-targets';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
 import { Construct } from 'constructs';
-import * as path from 'path';
 
-export class TestAppStack extends cdk.Stack {
+export class HelpflUiStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -23,7 +22,7 @@ export class TestAppStack extends cdk.Stack {
 
     new BucketDeployment(this, "HelpflSPADeployment", {
         sources: [
-            Source.asset('./dist/ui')
+            Source.asset('./dist')
         ],
         destinationBucket: bucket
     });
