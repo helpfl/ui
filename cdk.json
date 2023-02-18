@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts infrastructure/create-stack.ts",
+  "app": "npx ts-node --prefer-ts-exts --project tsconfig.infra.json infrastructure/create-stack.ts",
   "watch": {
     "include": [
       "**"

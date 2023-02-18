@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "declaration": true,
+    "strict": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules",
+    "cdk.out"
+  ],
+  "include": [
+    "infrastructure/**/*.ts"
+  ]
+}
