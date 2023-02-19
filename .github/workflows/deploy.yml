@@ -5,9 +5,9 @@ on:
 
 jobs:
   deploy:
-#    name: "CI/CD"
-#    runs-on: ubuntu-latest
-#    steps:
+    name: "CI/CD"
+    runs-on: ubuntu-latest
+    steps:
 #      - name: checkout
 #        uses: actions/checkout@v3
 #
@@ -40,6 +40,6 @@ jobs:
         with:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-          color: #48f442
+          color: "#48f442"
           username: "GitHub Bot
           message: The ${{ github.event.repository.name }} has successfully deployed.
