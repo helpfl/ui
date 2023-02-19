@@ -1,36 +1,63 @@
-import {Component, useState} from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import {marked} from "marked";
+import DOMPurify from "dompurify";
+import {wrapAsync} from "./promise-wrapper";
 
-class App extends Component {
-  render() {
-    const [count, setCount] = useState(0)
-
+export default function App() {
+    const content = getContent();
     return (
-      <div className="App">
-        <div>
-          <a href="https://vitejs.dev" target="_blank">
-            <img src="/vite.svg" className="logo" alt="Vite logo"/>
-          </a>
-          <a href="https://reactjs.org" target="_blank">
-            <img src={reactLogo} className="logo react" alt="React logo"/>
-          </a>
-        </div>
-        <h1>Vite + React</h1>
-        <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-          </button>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
-        </div>
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
-        </p>
+      <div>
+        <div dangerouslySetInnerHTML={{__html: renderMarkdown(content)}}/>
       </div>
-    )
+    );
+}
+
+const getContent = wrapAsync('...loading',  async () => {
+  const cachedContent = getCachedContent();
+  if (cachedContent) {
+    console.log('using cached content');
+    return cachedContent;
+  }
+  const content = await getContentFromRestApi();
+  setCachedContent(content);
+  return content;
+});
+
+const getContentFromRestApi = () => {
+  return Promise.resolve("# Hello World");
+};
+
+const renderMarkdown = (content: string) => {
+  return DOMPurify.sanitize(marked.parse(content));
+};
+
+const getCachedContent = () => {
+  try {
+    const contentJson = localStorage.getItem('content');
+    if (!contentJson) {
+      return;
+    }
+    const {content, timestamp}: Content = JSON.parse(contentJson);
+    if (expired(timestamp)) {
+      return;
+    }
+    return content;
+  } catch (e) {
+    console.log(e);
+    return;
   }
 }
 
-export default App
+const expired = (timestamp: number) => {
+  return timestamp + 1000 * 60 * 60 < Date.now()
+};
+
+const setCachedContent = (value: string) => {
+  const content: Content = {content: value, timestamp: Date.now()};
+  localStorage.setItem('content', JSON.stringify(content));
+};
+
+type Content = {
+  content: string;
+  timestamp: number;
+};
