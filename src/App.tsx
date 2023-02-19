@@ -3,8 +3,12 @@ import {marked} from "marked";
 import DOMPurify from "dompurify";
 import {wrapAsync} from "./promise-wrapper";
 
-export default function App() {
-    const content = getContent();
+export type AppProps = {
+  readonly contentServiceUrl: string;
+};
+
+export default function App({contentServiceUrl}: AppProps) {
+    const content = getContent(contentServiceUrl);
     return (
       <div>
         <div dangerouslySetInnerHTML={{__html: renderMarkdown(content)}}/>
@@ -12,19 +16,36 @@ export default function App() {
     );
 }
 
-const getContent = wrapAsync('...loading',  async () => {
+const getContent = wrapAsync('...loading',  async (baseUrl: string) => {
   const cachedContent = getCachedContent();
   if (cachedContent) {
     console.log('using cached content');
     return cachedContent;
   }
-  const content = await getContentFromRestApi();
+  const content = await getContentFromRestApi(baseUrl);
   setCachedContent(content);
   return content;
 });
 
-const getContentFromRestApi = () => {
-  return Promise.resolve("# Hello World");
+const getContentFromRestApi = async (baseUrl: string): Promise<string> => {
+  const now = Date.now();
+  const fiveDaysAgo = now - 1000 * 60 * 60 * 24 * 5;
+  const url = urlWithQueryParams(baseUrl, {
+    end: now.toString(),
+    start: fiveDaysAgo.toString()
+  });
+
+  const response = await fetch(url);
+  const [{content}] = await response.json();
+
+  return content;
+};
+
+const urlWithQueryParams = (url: string, params: Record<string, string>) => {
+  const queryParams = Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
+  return `${url}?${queryParams}`;
 };
 
 const renderMarkdown = (content: string) => {
@@ -43,7 +64,7 @@ const getCachedContent = () => {
     }
     return content;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return;
   }
 }
