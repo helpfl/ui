@@ -8,6 +8,15 @@ jobs:
     name: "CI/CD"
     runs-on: ubuntu-latest
     steps:
+      - name: Notify to Discord
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#48f442"
+          username: "GitHub Bot
+          message: The ${{ github.event.repository.name }} has successfully deployed.
+
 #      - name: checkout
 #        uses: actions/checkout@v3
 #
@@ -35,11 +44,3 @@ jobs:
 #          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
 #          AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
 
-      - name: Notify to Discord
-        uses: appleboy/discord-action@master
-        with:
-          webhook_id: ${{ secrets.WEBHOOK_ID }}
-          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-          color: "#48f442"
-          username: "GitHub Bot
-          message: The ${{ github.event.repository.name }} has successfully deployed.
