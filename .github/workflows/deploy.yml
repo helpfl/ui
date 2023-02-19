@@ -14,7 +14,7 @@ jobs:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
           color: "#48f442"
-          username: "GitHub Bot
+          username: GitHub Bot
           message: The ${{ github.event.repository.name }} has successfully deployed.
 
 #      - name: checkout
