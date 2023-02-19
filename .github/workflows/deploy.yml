@@ -34,3 +34,10 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+
+      - name: Notify to Discord
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          args: The ${{ github.event.repository.name }} has successfully deployed.
