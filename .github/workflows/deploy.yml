@@ -40,27 +40,27 @@ jobs:
           with:
             webhook_id: ${{ secrets.WEBHOOK_ID }}
             webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        - name: Notify to Discord Success
-          uses: appleboy/discord-action@master
-          with:
-            webhook_id: ${{ secrets.WEBHOOK_ID }}
-            webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-            color: "#48f442"
-            username: CI/CD Bot
-            message: |
-              The ${{ github.event.repository.name }} has successfully deployed.
-              See the details: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
-              See the diff here: ${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }}
-
-        - name: Notify to Discord Failure
-          uses: appleboy/discord-action@master
-          with:
-            webhook_id: ${{ secrets.WEBHOOK_ID }}
-            webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-            color: "#f22a02"
-            username: CI/CD Bot
-            message: |
-              The ${{ github.event.repository.name }} failed to deploy deployed.
-              See the details: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
-              See the diff here: ${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }}
+#        - name: Notify to Discord Success
+#          uses: appleboy/discord-action@master
+#          with:
+#            webhook_id: ${{ secrets.WEBHOOK_ID }}
+#            webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+#            color: "#48f442"
+#            username: CI/CD Bot
+#            message: |
+#              The ${{ github.event.repository.name }} has successfully deployed.
+#              See the details: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
+#              See the diff here: ${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }}
+#
+#        - name: Notify to Discord Failure
+#          uses: appleboy/discord-action@master
+#          with:
+#            webhook_id: ${{ secrets.WEBHOOK_ID }}
+#            webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+#            color: "#f22a02"
+#            username: CI/CD Bot
+#            message: |
+#              The ${{ github.event.repository.name }} failed to deploy deployed.
+#              See the details: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
+#              See the diff here: ${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }}
 
