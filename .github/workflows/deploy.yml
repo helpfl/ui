@@ -9,56 +9,56 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-#      - name: checkout
-#        uses: actions/checkout@v3
-#
-#      - name: Install Dependencies
-#        run: |
-#          npm ci
-#
-#      - name: Test
-#        run: |
-#          npm run test
-#
-#      - name: Build
-#        run: |
-#          npm run build
-#
-#      - name: Deploy
-#        uses: youyo/aws-cdk-github-actions@v2
-#        with:
-#          cdk_subcommand: 'deploy'
-#          cdk_args: '--require-approval never'
-#          actions_comment: false
-#        env:
-#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-#          AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+      - name: checkout
+        uses: actions/checkout@v3
 
-        - name: Notify to Discord Success
-          uses: appleboy/discord-action@master
-          if: success()
-          with:
-            webhook_id: ${{ secrets.WEBHOOK_ID }}
-            webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-            color: "#48f442"
-            username: CI/CD Bot
-            message: |
-              The ${{ github.event.repository.name }} has successfully deployed.
-              See the details: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
-              See the diff here: ${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }}
+      - name: Install Dependencies
+        run: |
+          npm ci
 
-        - name: Notify to Discord Failure
-          uses: appleboy/discord-action@master
-          if: failure()
-          with:
-            webhook_id: ${{ secrets.WEBHOOK_ID }}
-            webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-            color: "#f22a02"
-            username: CI/CD Bot
-            message: |
-              The ${{ github.event.repository.name }} failed to deploy deployed.
-              See the details: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
-              See the diff here: ${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }}
+      - name: Test
+        run: |
+          npm run test
+
+      - name: Build
+        run: |
+          npm run build
+
+      - name: Deploy
+        uses: youyo/aws-cdk-github-actions@v2
+        with:
+          cdk_subcommand: 'deploy'
+          cdk_args: '--require-approval never'
+          actions_comment: false
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+          AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+
+      - name: Notify to Discord Success
+        uses: appleboy/discord-action@master
+        if: success()
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#48f442"
+          username: CI/CD Bot
+          message: |
+            The ${{ github.event.repository.name }} has successfully deployed.
+            See the details: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
+            See the diff here: ${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }}
+
+      - name: Notify to Discord Failure
+        uses: appleboy/discord-action@master
+        if: failure()
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          color: "#f22a02"
+          username: CI/CD Bot
+          message: |
+            The ${{ github.event.repository.name }} failed to deploy deployed.
+            See the details: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
+            See the diff here: ${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }}
 
