@@ -12,7 +12,7 @@ jobs:
 #      - name: checkout
 #        uses: actions/checkout@v3
 #
-#      - name: npm ci
+#      - name: Install Dependencies
 #        run: |
 #          npm ci
 #
@@ -20,11 +20,11 @@ jobs:
 #        run: |
 #          npm run test
 #
-#      - name: build
+#      - name: Build
 #        run: |
 #          npm run build
 #
-#      - name: cdk deploy
+#      - name: Deploy
 #        uses: youyo/aws-cdk-github-actions@v2
 #        with:
 #          cdk_subcommand: 'deploy'
@@ -42,5 +42,8 @@ jobs:
             webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
             color: "#48f442"
             username: GitHub Bot
-            message: The ${{ github.event.repository.name }} has successfully deployed.
+            message: |
+              The ${{ github.event.repository.name }} has successfully deployed.
+              See the details: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
+              See the diff here: ${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }}
 
