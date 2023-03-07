@@ -17,7 +17,6 @@ describe('App', () => {
 
     const restHandlers = [
         rest.get(url, (req, res, ctx) => {
-            console.log('>>>>>>>>> req', req);
             return res(ctx.status(200), ctx.json(posts));
         })
     ];
