@@ -37,6 +37,7 @@ const getContentFromRestApi = async (baseUrl: string): Promise<string> => {
 
   const response = await fetch(url);
   const [{content}] = await response.json();
+  console.log('using content from rest api' , content);
 
   return content;
 };
