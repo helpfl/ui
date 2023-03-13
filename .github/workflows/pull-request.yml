@@ -41,10 +41,11 @@ jobs:
         run: |
           npm test -- --coverage
 
-      - name: Coverage Report
-        uses: artiomtr/jest-coverage-report-action@v2
+      - name: Code Coverage Summary Report
+        id: code_coverage
+        uses: pavi2410/html-preview-action@v2
         with:
-            github-token: ${{ secrets.GITHUB_TOKEN }}
+          html_file: 'coverage/index.html'
 
   build:
     name: Build
