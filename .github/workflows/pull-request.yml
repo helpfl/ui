@@ -41,11 +41,16 @@ jobs:
         run: |
           npm test -- --coverage
 
-      - name: Code Coverage Summary Report
-        id: code_coverage
-        uses: pavi2410/html-preview-action@v2
-        with:
-          html_file: 'coverage/index.html'
+      - name: Code Coverage Report
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: coverage/**/coverage.cobertura.xml
+        badge: true
+        fail_below_min: true
+        format: markdown
+        indicators: true
+        output: both
+        thresholds: '60 80'
 
   build:
     name: Build
