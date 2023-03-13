@@ -7,7 +7,7 @@ The site is hosted at https://helpfl.click
 
 ##  Prerequisites
 
-* NODE 14
+* node js
 
 ## Useful Commands
 
