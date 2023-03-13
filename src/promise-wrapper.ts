@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState} from 'react';
 
 export function wrapAsync<T, A extends unknown[]>(
     init: T,
