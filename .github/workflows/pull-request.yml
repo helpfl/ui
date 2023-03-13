@@ -52,6 +52,11 @@ jobs:
           output: both
           thresholds: '60 80'
 
+      - name: Code Coverage Comment
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          filePath: code-coverage-results.md
+
   build:
     name: Build
     runs-on: ubuntu-latest
