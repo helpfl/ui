@@ -42,15 +42,15 @@ jobs:
           npm test -- --coverage
 
       - name: Code Coverage Report
-      uses: irongut/CodeCoverageSummary@v1.3.0
-      with:
-        filename: coverage/**/coverage.cobertura.xml
-        badge: true
-        fail_below_min: true
-        format: markdown
-        indicators: true
-        output: both
-        thresholds: '60 80'
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage/**/coverage.cobertura.xml
+          badge: true
+          fail_below_min: true
+          format: markdown
+          indicators: true
+          output: both
+          thresholds: '60 80'
 
   build:
     name: Build
