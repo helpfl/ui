@@ -1,85 +1,72 @@
-import './App.css'
-import {marked} from "marked";
-import DOMPurify from "dompurify";
-import {wrapAsync} from "./promise-wrapper";
+import React, { useState } from 'react';
+import { DownCircleOutlined, SettingOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import type { MenuProps } from 'antd';
+import { Menu } from 'antd';
+import NotFound from './components/notFound1';
+import Nav from './components/Nav';
 
-export type AppProps = {
-  readonly contentServiceUrl: string;
+
+
+
+const navigation = [
+  {
+    label: 'Home',
+    key: '/',
+    icon: <DownCircleOutlined />,
+
+  },
+  {
+    label: 'Link 1',
+    key: '/notfound1',
+    icon: <DownCircleOutlined />,
+
+  },
+  {
+    label: 'Link 2',
+    key: '/notfound2',
+    icon: <DownCircleOutlined />,
+
+  },
+  {
+    label: 'Link 3',
+    key: '/notfound3',
+    icon: <DownCircleOutlined />,
+
+  },
+
+]
+
+
+
+
+
+
+const App: React.FC = () => {
+
+  const navigate = useNavigate()
+  const handleClick = (kp: string) => navigate(kp)
+
+  return (
+    <div>
+
+      <Menu
+        theme="light"
+        mode="horizontal"
+        defaultSelectedKeys={["1"]}
+        items={navigation}
+        onClick={({ key }) => {
+          handleClick(key)
+
+        }}
+      />
+
+      <Nav />
+    </div>
+
+  )
 };
 
-export default function App({contentServiceUrl}: AppProps) {
-    const content = getContent(contentServiceUrl);
-    return (
-      <div>
-        <div dangerouslySetInnerHTML={{__html: renderMarkdown(content)}}/>
-      </div>
-    );
-}
+export default App;
 
-const getContent = wrapAsync('...loading',  async (baseUrl: string) => {
-  const cachedContent = getCachedContent();
-  if (cachedContent) {
-    console.log('using cached content');
-    return cachedContent;
-  }
-  const content = await getContentFromRestApi(baseUrl);
-  setCachedContent(content);
-  return content;
-});
 
-const getContentFromRestApi = async (baseUrl: string): Promise<string> => {
-  const now = Date.now();
-  const fiveDaysAgo = now - 1000 * 60 * 60 * 24 * 5;
-  const url = urlWithQueryParams(baseUrl, {
-    end: now.toString(),
-    start: fiveDaysAgo.toString()
-  });
-
-  const response = await fetch(url);
-  const [{content}] = await response.json();
-  console.log('using content from rest api' , content);
-
-  return content;
-};
-
-const urlWithQueryParams = (url: string, params: Record<string, string>) => {
-  const queryParams = Object.entries(params)
-    .map(([key, value]) => `${key}=${value}`)
-    .join('&');
-  return `${url}?${queryParams}`;
-};
-
-const renderMarkdown = (content: string) => {
-  return DOMPurify.sanitize(marked.parse(content));
-};
-
-const getCachedContent = () => {
-  try {
-    const contentJson = localStorage.getItem('content');
-    if (!contentJson) {
-      return;
-    }
-    const {content, timestamp}: Content = JSON.parse(contentJson);
-    if (expired(timestamp)) {
-      return;
-    }
-    return content;
-  } catch (e) {
-    console.error(e);
-    return;
-  }
-}
-
-const expired = (timestamp: number) => {
-  return timestamp + 1000 * 60 * 60 < Date.now()
-};
-
-const setCachedContent = (value: string) => {
-  const content: Content = {content: value, timestamp: Date.now()};
-  localStorage.setItem('content', JSON.stringify(content));
-};
-
-type Content = {
-  content: string;
-  timestamp: number;
-};

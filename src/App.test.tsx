@@ -1,40 +1,51 @@
-import {render, screen, waitFor} from '@testing-library/react';
-import {describe, afterAll, afterEach, beforeAll} from 'vitest';
-import {setupServer} from 'msw/node';
-import {rest} from 'msw';
+import { render, screen } from '@testing-library/react';
+import 'antd/dist/reset.css';
+import './App.css';
 
 import App from './App';
 
-describe('App', () => {
+test('display "Hello World" on initial render', () => {
+    render(
+        <App />
+    )
 
-    const url = 'https://example.com';
-
-    const posts = [
-        {
-            content: 'Hello World'
-        }
-    ];
-
-    const restHandlers = [
-        rest.get(url, (req, res, ctx) => {
-            return res(ctx.status(200), ctx.json(posts));
-        })
-    ];
-
-    const server = setupServer(...restHandlers);
+    expect(screen.getByRole('heading')).toHaveTextContent("Hello World")
+})
 
 
-    beforeAll(() => server.listen({onUnhandledRequest: 'error'}));
+// import { describe, afterAll, afterEach, beforeAll } from 'vitest';
+// import { setupServer } from 'msw/node';
+// import { rest } from 'msw';
+// describe('App', () => {
 
-    afterAll(() => server.close());
+//     const url = 'https://example.com';
 
-    afterEach(() => server.resetHandlers());
+//     const posts = [
+//         {
+//             content: 'Hello World'
+//         }
+//     ];
 
-    it('renders content', async () => {
-        render(<App contentServiceUrl={url}/>);
+//     const restHandlers = [
+//         rest.get(url, (req, res, ctx) => {
+//             return res(ctx.status(200), ctx.json(posts));
+//         })
+//     ];
 
-        await waitFor(() => {
-            expect(screen.getByText('Hello World')).toBeInTheDocument();
-        });
-    });
-});
+//     const server = setupServer(...restHandlers);
+
+
+//     beforeAll(() => server.listen({onUnhandledRequest: 'error'}));
+
+//     afterAll(() => server.close());
+
+//     afterEach(() => server.resetHandlers());
+
+//     it('renders content', async () => {
+//         render(<App contentServiceUrl={url}/>);
+
+//         await waitFor(() => {
+//             expect(screen.getByText('Hello World')).toBeInTheDocument();
+//         });
+//     });
+// });
