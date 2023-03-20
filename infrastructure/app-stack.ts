@@ -20,7 +20,7 @@ export class HelpflUiStack extends cdk.Stack {
         websiteErrorDocument: 'index.html'
     });
 
-    new BucketDeployment(this, "HelpflSPADeployment", {
+    new BucketDeployment(this, 'HelpflSPADeployment', {
         sources: [
             Source.asset('./dist')
         ],
