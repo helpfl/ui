@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NotFound3: React.FC = () => {
+const NotFound: React.FC = () => {
     return (
         <div className="not-found">
             <h1>NOT FOUND</h1>
@@ -8,4 +8,4 @@ const NotFound3: React.FC = () => {
     );
 }
 
-export default NotFound3;
+export default NotFound;

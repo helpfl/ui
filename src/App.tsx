@@ -3,7 +3,7 @@ import { DownCircleOutlined, SettingOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import NotFound from './components/notFound1';
+import NotFound from './components/notFound';
 import Nav from './components/Nav';
 
 
