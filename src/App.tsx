@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { DownCircleOutlined, SettingOutlined } from '@ant-design/icons';
+import React from 'react';
+import { DownCircleOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import type { MenuProps } from 'antd';
+// import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import NotFound from './components/notFound';
+// import NotFound from './components/notFound';
 import Nav from './components/Nav';
 
 
@@ -53,7 +53,7 @@ const App: React.FC = () => {
       <Menu
         theme="light"
         mode="horizontal"
-        defaultSelectedKeys={["1"]}
+        defaultSelectedKeys={['1']}
         items={navigation}
         onClick={({ key }) => {
           handleClick(key)

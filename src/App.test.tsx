@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import App from './App';
 
-test('display "Hello World" on initial render', () => {
+test('app renders without error', () => {
     render(
         <BrowserRouter>
             <App />
