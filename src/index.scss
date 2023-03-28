@@ -14,7 +14,17 @@ body {
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  margin: 1em;
+  height: auto;
+  width: 300px;
+
+  img {
+    padding: .5em;
+    height: 75px;
+    width: auto;
+    text-align: center;
+  }
+
+
+
 }

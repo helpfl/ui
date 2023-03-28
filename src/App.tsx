@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { Menu } from 'antd';
 import Nav from './components/Nav';
 import ContentCard from './components/ContentCard';
+//import ContentCard from './components/ContentCard';
+
+
 
 
 
@@ -50,6 +53,8 @@ const navigation = [
 
 const App: React.FC = () => {
 
+  // const [stories, setStories] = useState(5)
+
   const navigate = useNavigate()
   const handleClick = (kp: string) => navigate(kp)
 
@@ -59,6 +64,7 @@ const App: React.FC = () => {
       <Menu
         theme="light"
         mode="horizontal"
+        style={{ justifyContent: 'right' }}
         defaultSelectedKeys={['1']}
         items={navigation}
         onClick={({ key }) => {
@@ -69,7 +75,10 @@ const App: React.FC = () => {
 
       <Nav />
       <div>
-        <ContentCard />
+        {
+          [...Array(5)].map((x, i) =>
+            <ContentCard key={i} />
+          )}
       </div>
     </div>
 
