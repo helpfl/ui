@@ -12,3 +12,9 @@ body {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
