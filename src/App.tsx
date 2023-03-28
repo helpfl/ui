@@ -3,7 +3,7 @@ import { DownCircleOutlined, MenuOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { Menu } from 'antd';
 import Nav from './components/Nav';
-import ContentCard from './components/ContentCard';
+
 //import ContentCard from './components/ContentCard';
 
 
@@ -74,12 +74,7 @@ const App: React.FC = () => {
       />
 
       <Nav />
-      <div>
-        {
-          [...Array(5)].map((x, i) =>
-            <ContentCard key={i} />
-          )}
-      </div>
+
     </div>
 
   )
